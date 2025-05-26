@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
-// import DarkModeToggle from "./DarkModeToggle";
+import DarkModeToggle from "./DarkModeToggle";
 // import LogOutButton from "./LogOutButton";
 // import { getUser } from "@/auth/server";
 
@@ -46,7 +46,7 @@ async function Header() {
             </Button>
           </>
         )}
-        {/* <DarkModeToggle /> */}
+        <DarkModeToggle />
       </div>
     </header>
   );
