@@ -9,7 +9,7 @@ import { useTransition } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-// import { loginAction, signUpAction } from "@/actions/users";
+import { loginAction, signUpAction } from "@/actions/users";
 
 type Props = {
   type: "login" | "signUp";
@@ -19,7 +19,6 @@ function AuthForm({ type }: Props) {
   const isLoginForm = type === "login";
 
   const router = useRouter();
-  // const { toast } = useToast();
 
   const [isPending, startTransition] = useTransition();
 
@@ -30,25 +29,21 @@ function AuthForm({ type }: Props) {
 
       let errorMessage;
       if (isLoginForm) {
-        // errorMessage = (await loginAction(email, password)).errorMessage;
-        toast.success("Success", {
-          description: "You have been logged out",
-          className: "bg-green-100 text-green-800 border border-green-300",
-        });
+        errorMessage = (await loginAction(email, password)).errorMessage;
       } else {
-        // errorMessage = (await signUpAction(email, password)).errorMessage;
-        toast.error(errorMessage, {
-          description: "You exit from system",
-          className: "bg-red-100 text-red-800 border border-red-300",
-        });
+        errorMessage = (await signUpAction(email, password)).errorMessage;
       }
 
       if (!errorMessage) {
+        toast("✅ Success", {
+          description: `${isLoginForm ? "Logged in" : "Signed up"} successfully!`,
+          className: "bg-green-500 text-white",
+        });
         router.replace(`/?toastType=${type}`);
       } else {
-        toast.error(errorMessage, {
-          description: "You exit from system",
-          className: "bg-red-100 text-red-800 border border-red-300",
+        toast("❌ Error", {
+          description: errorMessage,
+          className: "bg-red-500 text-white",
         });
       }
     });

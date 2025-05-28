@@ -6,7 +6,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { useRouter } from "next/navigation";
-// import { logOutAction } from "@/actions/users";
+import { logOutAction } from '@/actions/users'
 
 function LogOutButton() {
   const router = useRouter();
@@ -15,7 +15,7 @@ function LogOutButton() {
   const handleLogOut = async () => {
     setLoading(true);
 
-    const errorMessage = null;
+    const {errorMessage} = await logOutAction();
 
  if (!errorMessage) {
   toast.success("Success", {
