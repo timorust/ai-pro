@@ -18,7 +18,7 @@ function LogOutButton() {
     const {errorMessage} = await logOutAction();
 
  if (!errorMessage) {
-  toast.success("Success", {
+  toast.success("Logged out", {
     description: "You have been logged out",
     className: "bg-green-100 text-green-800 border border-green-300",
   });

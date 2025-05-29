@@ -39,7 +39,7 @@ function AuthForm({ type }: Props) {
           description: `${isLoginForm ? "Logged in" : "Signed up"} successfully!`,
           className: "bg-green-500 text-white",
         });
-        router.replace(`/?toastType=${type}`);
+        router.replace(`/`);
       } else {
         toast("❌ Error", {
           description: errorMessage,
