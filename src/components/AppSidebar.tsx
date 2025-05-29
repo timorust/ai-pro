@@ -1,40 +1,53 @@
-import { getUser } from '@/auth/server'
-import { Note} from "@prisma/client"
+import { getUser } from "@/auth/server";
+import { Note } from "@prisma/client";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarHeader,
-} from "@/components/ui/sidebar"
-import { prisma } from '@/db/prisma'
+  SidebarGroupLabel,
+} from "@/components/ui/sidebar";
+import { prisma } from "@/db/prisma";
+import Link from "next/link";
+import SidebarGroupContent from './SidebarGroupContent'
 
 async function AppSidebar() {
+  const user = await getUser();
+  let notes: Note[] = [];
 
-	const user = await getUser();
-	let notes: Note[] = []
-
-	if(user) {
-		notes = await prisma.note.findMany({
-			where: {
-				authorId: user.id
-			},
-			orderBy: {
-				updatedAt: "desc"
-			}
-			
-		})
-	}
+  if (user) {
+    notes = await prisma.note.findMany({
+      where: {
+        authorId: user.id,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+  }
 
   return (
     <Sidebar>
-      <SidebarContent className='custom-scrollbar'>
-        <SidebarGroup />
-        <SidebarGroup />
+      <SidebarContent className="custom-scrollbar">
+        <SidebarGroup>
+          <SidebarGroupLabel className='mb-2 mt-2 text-lg'>
+            {user ? (
+              "You Notes"
+            ) : (
+              <>
+                <Link href="/login" className="underline">
+                  Log in
+                </Link>{" "}
+                to see your notes
+              </>
+            )}
+          </SidebarGroupLabel>
+					{user && <SidebarGroupContent notes={notes}/>}
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
-  )
+  );
 }
 
-export default AppSidebar
+export default AppSidebar;
