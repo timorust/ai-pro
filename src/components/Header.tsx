@@ -5,7 +5,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import DarkModeToggle from "./DarkModeToggle";
 import LogOutButton from "./LogoutButton";
-import { getUser } from "@/auth/sever";
+import { getUser } from "@/auth/server";
 
 async function Header() {
   const user = await getUser();
